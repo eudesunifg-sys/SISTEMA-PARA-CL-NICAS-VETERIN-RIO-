@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetSOS | Área do Cliente</title>
+  <style>
+    :root{
+      --green:#167a58;--green2:#0e5e43;--mint:#e8f7ef;--orange:#ffb454;
+      --ink:#18332a;--muted:#64756d;--bg:#f7faf8;--white:#fff;--line:#e2ebe5;--red:#d84d4d
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:Inter,Segoe UI,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer;border:0}
+    .hidden{display:none !important}
+
+    header{
+      position:sticky;top:0;z-index:10;
+      background:rgba(255,255,255,.95);backdrop-filter:blur(10px);
+      border-bottom:1px solid var(--line)
+    }
+    .nav{
+      max-width:1150px;margin:auto;padding:14px 22px;
+      display:flex;align-items:center;justify-content:space-between;gap:18px
+    }
+    .brand{display:flex;align-items:center;gap:10px;font-size:1.3rem;font-weight:850;color:var(--green)}
+    .logo{
+      width:42px;height:42px;border-radius:14px;background:var(--green);
+      display:grid;place-items:center;color:#fff;font-size:24px
+    }
+    .navlinks{display:flex;gap:22px;align-items:center;color:#40574c;font-weight:650;font-size:.95rem}
+    .navlinks a:hover{color:var(--green)}
+
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;gap:8px;
+      border-radius:12px;padding:11px 16px;font-weight:750;transition:.2s
+    }
+    .btn-primary{background:var(--green);color:#fff}
+    .btn-primary:hover{background:var(--green2);transform:translateY(-1px)}
+    .btn-light{background:#fff;color:var(--green);border:1px solid var(--line)}
+    .btn-orange{background:var(--orange);color:#3e2b10}
+
+    .hero-mini{
+      background:radial-gradient(circle at 85% 20%,#c6efd8 0,transparent 30%),
+                 linear-gradient(120deg,#eaf8ef,#f8fcf9 70%);
+      border-bottom:1px solid var(--line);padding:34px 22px
+    }
+    .hero-mini-inner{
+      max-width:1150px;margin:auto;
+      display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap
+    }
+    .eyebrow{
+      display:inline-block;background:#d6f0e1;color:var(--green2);
+      font-weight:800;font-size:.8rem;letter-spacing:.04em;
+      padding:6px 12px;border-radius:99px
+    }
+    .hero-mini h1{margin:10px 0 6px;font-size:clamp(1.7rem,3.5vw,2.4rem);letter-spacing:-.03em}
+    .hero-mini p{margin:0;color:#52695e}
+
+    .section{max-width:1150px;margin:auto;padding:28px 22px 42px}
+
+    .tabs-bar{
+      display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px
+    }
+    .tab-btn{
+      background:#fff;color:#40574c;border:1px solid var(--line);
+      border-radius:12px;padding:11px 18px;font-weight:750;transition:.2s
+    }
+    .tab-btn:hover{border-color:var(--green);color:var(--green)}
+    .tab-btn.active{background:var(--green);color:#fff;border-color:var(--green)}
+
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .perdidos-layout{display:grid;grid-template-columns:380px 1fr;gap:22px;align-items:start}
+
+    .card{
+      background:var(--white);border:1px solid var(--line);
+      border-radius:20px;padding:22px
+    }
+    .card h2{margin:0 0 6px;font-size:1.25rem}
+    .card-sub{color:var(--muted);font-size:.92rem;margin:0 0 18px}
+
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .full{grid-column:1/-1}
+    label{display:block;font-size:.86rem;font-weight:750;margin-bottom:6px}
+    .field{
+      width:100%;padding:11px 13px;border:1px solid #dce7df;
+      border-radius:11px;background:#fff;color:var(--ink);outline:none
+    }
+    .field:focus{border-color:var(--green);box-shadow:0 0 0 3px #167a5818}
+
+    .items{display:grid;gap:12px;margin-top:14px}
+    .item{
+      border:1px solid var(--line);border-radius:16px;padding:14px 16px;
+      background:#fbfdfb;display:flex;justify-content:space-between;align-items:center;gap:12px
+    }
+    .item strong{display:block;font-size:1rem}
+    .item small{color:var(--muted);font-size:.88rem}
+    .pill{
+      background:var(--mint);color:var(--green2);
+      font-size:.78rem;font-weight:800;padding:6px 11px;border-radius:99px;white-space:nowrap
+    }
+    .pill.perdido{background:#fff0dc;color:#8a4b00}
+    .pill.encontrado{background:#d9f4e5;color:#0e5e43}
+
+    .filters{
+      display:grid;grid-template-columns:1fr 150px 150px auto;gap:10px;
+      margin-bottom:18px
+    }
+    .cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+    .pet-card{
+      border:1px solid var(--line);border-radius:16px;padding:16px;
+      background:#fbfdfb;display:flex;flex-direction:column;gap:8px
+    }
+    .pet-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .pet-card h3{margin:0;font-size:1.05rem}
+    .pet-card p{margin:0;color:#4f655b;font-size:.9rem}
+    .pet-meta{color:var(--muted);font-size:.84rem}
+
+    .toast{
+      position:fixed;right:18px;bottom:18px;background:#153e2e;color:#fff;
+      padding:14px 18px;border-radius:14px;box-shadow:0 12px 35px #0002;
+      z-index:50;display:none;max-width:360px
+    }
+    .toast.show{display:block}
+
+    @media(max-width:920px){
+      .perdidos-layout{grid-template-columns:1fr}
+      .filters{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:800px){
+      .navlinks{display:none}
+      .grid-2{grid-template-columns:1fr}
+    }
+    @media(max-width:540px){
+      .form-grid,.filters{grid-template-columns:1fr}
+      .full{grid-column:auto}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="nav">
+      <a class="brand" href="/"><span class="logo">🐾</span> PetSOS</a>
+      <div class="navlinks">
+        <a href="#cadastrar-pet" data-open-tab="cliente">Cadastrar pet</a>
+        <a href="#agendar-consulta" data-open-tab="cliente">Agendar consulta</a>
+        <a href="#aba-perdidos" data-open-tab="perdidos">Animais perdidos</a>
+      </div>
+      <a class="btn btn-light" href="/">← Início</a>
+    </nav>
+  </header>
+
+  <section class="hero-mini">
+    <div class="hero-mini-inner">
+      <div>
+        <span class="eyebrow">💚 Área do Cliente</span>
+        <h1>Cuidado dos teus animais, consultas e perdidos</h1>
+        <p>Regista os teus animais, marca consultas e acompanha pets perdidos ou encontrados.</p>
+      </div>
+      <a class="btn btn-primary" href="#agendar-consulta" data-open-tab="cliente">📅 Agendar consulta</a>
+    </div>
+  </section>
+
+  <main class="section">
+    <div class="tabs-bar" role="tablist">
+      <button type="button" class="tab-btn active" data-tab="cliente">🐾 Meus Pets & Consultas</button>
+      <button type="button" class="tab-btn" id="aba-perdidos" data-tab="perdidos">🔎 Animais Perdidos</button>
+    </div>
+
+    <!-- ABA 1: ÁREA DO CLIENTE -->
+    <div id="tab-cliente" class="grid-2">
+      <!-- Cadastro dos dados dos animais -->
+      <section class="card" id="cadastrar-pet">
+        <h2>🐕 Dados do animal</h2>
+        <p class="card-sub">Preenche as informações do animal para o associar à tua conta.</p>
+        <form id="petForm">
+          <div class="form-grid">
+            <div>
+              <label for="petNome">Nome do animal *</label>
+              <input class="field" id="petNome" required placeholder="Ex.: Toby">
+            </div>
+            <div>
+              <label for="petEspecie">Espécie *</label>
+              <select class="field" id="petEspecie" required>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div>
+              <label for="petRaca">Raça / cor</label>
+              <input class="field" id="petRaca" placeholder="Ex.: Caramelo / SRD">
+            </div>
+            <div>
+              <label for="petIdade">Idade (anos)</label>
+              <input class="field" id="petIdade" type="number" min="0" placeholder="Ex.: 3">
+            </div>
+            <div class="full">
+              <label for="petObservacoes">Observações de saúde</label>
+              <textarea class="field" id="petObservacoes" rows="2" placeholder="Alergias, vacinas, temperamento..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit" style="width:100%;margin-top:14px">Guardar dados do animal</button>
+        </form>
+      </section>
+
+      <!-- Agendamento de consulta -->
+      <section class="card" id="agendar-consulta">
+        <h2>🩺 Agendar consulta</h2>
+        <p class="card-sub">Escolhe o animal, a data/hora e o motivo do atendimento.</p>
+        <form id="consultaForm">
+          <div class="form-grid">
+            <div class="full">
+              <label for="consultaAnimal">Animal *</label>
+              <select class="field" id="consultaAnimal" required>
+                <option value="">Seleciona um animal...</option>
+              </select>
+            </div>
+            <div>
+              <label for="consultaData">Data e hora *</label>
+              <input class="field" id="consultaData" type="datetime-local" required>
+            </div>
+            <div>
+              <label for="consultaTipo">Tipo de atendimento *</label>
+              <select class="field" id="consultaTipo" required>
+                <option value="Consulta geral">Consulta geral</option>
+                <option value="Vacinação">Vacinação</option>
+                <option value="Retorno">Retorno</option>
+                <option value="Exames">Exames</option>
+              </select>
+            </div>
+            <div class="full">
+              <label for="consultaMotivo">Sintomas ou observações</label>
+              <textarea class="field" id="consultaMotivo" rows="2" placeholder="Descreve o motivo da consulta..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-orange" type="submit" style="width:100%;margin-top:14px">Solicitar agendamento</button>
+        </form>
+      </section>
+
+      <!-- Lista de animais -->
+      <section class="card" id="meus-dados">
+        <h2>🐾 Animais registados</h2>
+        <p class="card-sub">Os teus animais guardados no sistema.</p>
+        <div class="items" id="listaAnimais">
+          <div class="item">
+            <div><strong>A carregar...</strong><small>A consultar o servidor</small></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Lista de consultas -->
+      <section class="card">
+        <h2>📅 Consultas marcadas</h2>
+        <p class="card-sub">Acompanha os agendamentos dos teus animais.</p>
+        <div class="items" id="listaConsultas">
+          <div class="item">
+            <div><strong>A carregar...</strong><small>A consultar o servidor</small></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ABA 2: ANIMAIS PERDIDOS -->
+    <div id="tab-perdidos" class="perdidos-layout hidden">
+      <section class="card">
+        <h2>📣 Publicar anúncio</h2>
+        <p class="card-sub">Regista um animal perdido ou encontrado para ajudar no reencontro.</p>
+        <form id="perdidoForm">
+          <div class="form-grid">
+            <div>
+              <label for="perdidoNome">Nome do pet *</label>
+              <input class="field" id="perdidoNome" name="nome" required placeholder="Ex.: Thor ou Sem nome">
+            </div>
+            <div>
+              <label for="perdidoEspecie">Espécie *</label>
+              <select class="field" id="perdidoEspecie" name="especie" required>
+                <option value="Cachorro">Cachorro</option>
+                <option value="Gato">Gato</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div>
+              <label for="perdidoSituacao">Situação *</label>
+              <select class="field" id="perdidoSituacao" name="situacao" required>
+                <option value="Perdido">Perdido</option>
+                <option value="Encontrado">Encontrado</option>
+              </select>
+            </div>
+            <div>
+              <label for="perdidoContato">Telefone / WhatsApp *</label>
+              <input class="field" id="perdidoContato" name="contato" required placeholder="(81) 99999-9999">
+            </div>
+            <div class="full">
+              <label for="perdidoLocalizacao">Bairro / Localização *</label>
+              <input class="field" id="perdidoLocalizacao" name="localizacao" required placeholder="Ex.: Candeias, Jaboatão dos Guararapes">
+            </div>
+            <div class="full">
+              <label for="perdidoCor">Cor e características *</label>
+              <input class="field" id="perdidoCor" name="cor_caracteristicas" required placeholder="Ex.: Caramelo, coleira azul, porte médio">
+            </div>
+            <div class="full">
+              <label for="perdidoDescricao">Descrição adicional</label>
+              <textarea class="field" id="perdidoDescricao" name="descricao" rows="2" placeholder="Detalhes extras, horário visto, comportamento..."></textarea>
+            </div>
+          </div>
+          <button class="btn btn-orange" type="submit" style="width:100%;margin-top:14px">Publicar anúncio</button>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>🔎 Mural de animais perdidos</h2>
+        <p class="card-sub">Filtra por nome, característica, bairro, espécie ou situação.</p>
+
+        <form class="filters" id="filtroForm">
+          <input class="field" id="filtroBusca" placeholder="Buscar por nome, cor ou bairro...">
+          <select class="field" id="filtroEspecie">
+            <option value="">Todas espécies</option>
+            <option value="Cachorro">Cachorro</option>
+            <option value="Gato">Gato</option>
+            <option value="Outro">Outro</option>
+          </select>
+          <select class="field" id="filtroSituacao">
+            <option value="">Todas situações</option>
+            <option value="Perdido">Perdido</option>
+            <option value="Encontrado">Encontrado</option>
+          </select>
+          <button class="btn btn-primary" type="submit">Filtrar</button>
+        </form>
+
+        <div class="cards-grid" id="muralLista">
+          <div class="pet-card">
+            <h3>A carregar anúncios...</h3>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const $ = id => document.getElementById(id);
+
+    function toast(msg) {
+      const t = $('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3500);
+    }
+
+    function esc(v) {
+      return String(v ?? '').replace(/[&<>"']/g, c => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      }[c]));
+    }
+
+    function trocarAba(aba) {
+      const ehPerdidos = aba === 'perdidos';
+      $('tab-cliente').classList.toggle('hidden', ehPerdidos);
+      $('tab-perdidos').classList.toggle('hidden', !ehPerdidos);
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.tab === aba);
+      });
+      if (ehPerdidos) carregarAnuncios();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => trocarAba(btn.dataset.tab));
+    });
+
+    document.querySelectorAll('[data-open-tab]').forEach(link => {
+      link.addEventListener('click', () => trocarAba(link.dataset.openTab));
+    });
+
+    async function carregarTudo() {
+      try {
+        const [resAnimais, resConsultas] = await Promise.all([
+          fetch('/api/animais', { credentials: 'include' }),
+          fetch('/api/consultas', { credentials: 'include' })
+        ]);
+
+        if (resAnimais.status === 401 || resConsultas.status === 401) {
+          toast('Precisas de iniciar sessão para ver os teus dados.');
+          return;
+        }
+
+        const animais = await resAnimais.json();
+        const consultas = await resConsultas.json();
+
+        const listaAnimais = $('listaAnimais');
+        const selectAnimal = $('consultaAnimal');
+        selectAnimal.innerHTML = '<option value="">Seleciona um animal...</option>';
+
+        if (!Array.isArray(animais) || animais.length === 0) {
+          listaAnimais.innerHTML = '<div class="item"><div><strong>Nenhum animal registado</strong><small>Usa o formulário ao lado para adicionar.</small></div></div>';
+        } else {
+          listaAnimais.innerHTML = animais.map(a => {
+            selectAnimal.innerHTML += `<option value="${esc(a.id)}">${esc(a.nome)} (${esc(a.especie || 'Animal')})</option>`;
+            return `
+              <div class="item">
+                <div>
+                  <strong>${esc(a.nome)}</strong>
+                  <small>${esc(a.especie || '')} ${a.raca ? '• ' + esc(a.raca) : ''} ${a.idade ? '• ' + esc(a.idade) + ' anos' : ''}</small>
+                </div>
+                <span class="pill">Ativo</span>
+              </div>`;
+          }).join('');
+        }
+
+        const listaConsultas = $('listaConsultas');
+        if (!Array.isArray(consultas) || consultas.length === 0) {
+          listaConsultas.innerHTML = '<div class="item"><div><strong>Nenhuma consulta marcada</strong><small>Agenda uma consulta no formulário acima.</small></div></div>';
+        } else {
+          listaConsultas.innerHTML = consultas.map(c => {
+            const rawDate = c.data_hora || c.data || '';
+            const parsedDate = rawDate ? new Date(String(rawDate).replace(' ', 'T')) : null;
+            const dataFmt = parsedDate && !Number.isNaN(parsedDate.getTime())
+              ? parsedDate.toLocaleString('pt-PT')
+              : rawDate;
+            const nomeAnimal = c.animal || c.animal_nome || (c.animal_id ? 'Animal #' + c.animal_id : 'Animal');
+            return `
+              <div class="item">
+                <div>
+                  <strong>${esc(nomeAnimal)}</strong>
+                  <small>${esc(dataFmt)} ${c.tipo ? '• ' + esc(c.tipo) : ''} ${c.motivo ? '— ' + esc(c.motivo) : ''}</small>
+                </div>
+                <span class="pill">${esc(c.status || 'Agendada')}</span>
+              </div>`;
+          }).join('');
+        }
+      } catch (err) {
+        console.error(err);
+        toast('Erro ao carregar os dados do cliente.');
+      }
+    }
+
+    $('petForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        nome: $('petNome').value.trim(),
+        especie: $('petEspecie').value,
+        raca: $('petRaca').value.trim() || null,
+        idade: $('petIdade').value ? Number($('petIdade').value) : null,
+        observacoes: $('petObservacoes').value.trim() || null
+      };
+
+      const res = await fetch('/api/animais', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok) return toast(data.erro || 'Não foi possível guardar o animal.');
+
+      e.target.reset();
+      toast('Dados do animal guardados!');
+      carregarTudo();
+    });
+
+    $('consultaForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const payload = {
+        animal_id: Number($('consultaAnimal').value),
+        data_hora: $('consultaData').value,
+        tipo: $('consultaTipo').value,
+        motivo: $('consultaMotivo').value.trim() || null
+      };
+
+      const res = await fetch('/api/consultas', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+      if (!res.ok) return toast(data.erro || 'Não foi possível agendar a consulta.');
+
+      e.target.reset();
+      toast('Consulta agendada com sucesso!');
+      carregarTudo();
+    });
+
+    async function carregarAnuncios() {
+      const params = new URLSearchParams();
+      if ($('filtroBusca').value.trim()) params.set('busca', $('filtroBusca').value.trim());
+      if ($('filtroEspecie').value) params.set('especie', $('filtroEspecie').value);
+      if ($('filtroSituacao').value) params.set('situacao', $('filtroSituacao').value);
+
+      const query = params.toString() ? `?${params.toString()}` : '';
+      const lista = $('muralLista');
+
+      try {
+        const res = await fetch(`/api/perdidos${query}`);
+        const dados = await res.json();
+
+        if (!res.ok) {
+          lista.innerHTML = `<div class="pet-card"><h3>Erro</h3><p>${esc(dados.erro || 'Falha ao carregar.')}</p></div>`;
+          return;
+        }
+
+        if (!Array.isArray(dados) || dados.length === 0) {
+          lista.innerHTML = '<div class="pet-card"><h3>Nenhum anúncio encontrado</h3><p>Seja o primeiro a publicar ou ajuste os filtros.</p></div>';
+          return;
+        }
+
+        lista.innerHTML = dados.map(item => {
+          const sit = item.situacao === 'Encontrado' ? 'Encontrado' : 'Perdido';
+          const classePill = sit === 'Encontrado' ? 'pill encontrado' : 'pill perdido';
+          return `
+            <article class="pet-card">
+              <div class="pet-top">
+                <h3>${esc(item.nome)}</h3>
+                <span class="${classePill}">${esc(sit)}</span>
+              </div>
+              <div class="pet-meta"><strong>${esc(item.especie)}</strong> • ${esc(item.localizacao)}</div>
+              <p><strong>Características:</strong> ${esc(item.cor_caracteristicas)}</p>
+              ${item.descricao ? `<p>${esc(item.descricao)}</p>` : ''}
+              <p class="pet-meta"><strong>Contato:</strong> ${esc(item.contato)}</p>
+            </article>
+          `;
+        }).join('');
+      } catch (err) {
+        console.error(err);
+        lista.innerHTML = '<div class="pet-card"><h3>Erro de conexão</h3><p>Não foi possível carregar o mural.</p></div>';
+      }
+    }
+
+    $('perdidoForm').addEventListener('submit', async e => {
+      e.preventDefault();
+      const body = Object.fromEntries(new FormData(e.target).entries());
+
+      try {
+        const res = await fetch('/api/perdidos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        const data = await res.json();
+        if (!res.ok) return toast(data.erro || 'Erro ao publicar anúncio.');
+
+        e.target.reset();
+        toast(data.mensagem || 'Anúncio publicado com sucesso!');
+        carregarAnuncios();
+      } catch (err) {
+        console.error(err);
+        toast('Erro ao enviar o anúncio.');
+      }
+    });
+
+    $('filtroForm').addEventListener('submit', e => {
+      e.preventDefault();
+      carregarAnuncios();
+    });
+
+    carregarTudo();
+  </script>
+</body>
+</html>

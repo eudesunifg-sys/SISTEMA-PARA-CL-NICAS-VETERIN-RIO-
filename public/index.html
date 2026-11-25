@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetSOS | Clínica Veterinária e Reencontros</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 1. TELA INICIAL -->
+  <section id="homeView" class="home-wrap">
+    <header class="home-nav">
+      <div class="home-container home-nav-inner">
+        <a class="brand home-brand" href="#homeView" data-home>
+          <span class="brand-mark small">🐾</span>
+          <span>PetSOS</span>
+        </a>
+
+        <nav class="home-links" aria-label="Menu principal">
+          <a href="#homeView" class="home-link active" data-home>Início</a>
+          <a href="cliente.html" class="home-link">Agendar consulta</a>
+          <a href="perdidos.html" class="home-link">Animais perdidos</a>
+        </nav>
+
+        <div class="home-actions">
+          <button type="button" class="btn light hidden" id="backToPanelBtn">Painel</button>
+          <button type="button" class="btn light" id="openRegisterBtn">Criar conta</button>
+          <button type="button" class="btn primary" id="openLoginBtn">Entrar</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="home-container home-main">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">CUIDADO, PROTEÇÃO E REENCONTROS</span>
+          <h1 class="hero-title">
+            Quem ama, <span>cuida.</span><br>
+            Quem procura, <span>encontra.</span>
+          </h1>
+          <p class="hero-subtitle">
+            O PetSOS conecta tutores, comunidade e clínicas veterinárias em um só lugar.
+            Cuide da saúde do seu melhor amigo e ajude animais perdidos a voltarem para casa.
+          </p>
+          <div class="hero-actions">
+            <a href="perdidos.html" class="btn primary hero-btn">🔍 Buscar animais</a>
+            <a href="cliente.html" class="btn light hero-btn">🏥 Agendar consulta</a>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <span class="hero-badge badge-top">💚 Cuidado em primeiro lugar</span>
+          <div class="pet-illustration" aria-hidden="true">🐶</div>
+          <span class="hero-badge badge-bottom">🐾 Juntos pelo reencontro</span>
+        </div>
+      </div>
+
+      <section class="pillars-grid" aria-label="Destaques">
+        <a href="perdidos.html" class="pillar-card">
+          <div class="pillar-title">🐾 Comunidade</div>
+          <p>Todos podem ajudar</p>
+        </a>
+        <a href="cliente.html" class="pillar-card">
+          <div class="pillar-title">🏥 Saúde animal</div>
+          <p>Informações em um só lugar</p>
+        </a>
+        <a href="perdidos.html" class="pillar-card">
+          <div class="pillar-title">💚 Reencontros</div>
+          <p>Mais chances de voltar para casa</p>
+        </a>
+      </section>
+    </main>
+  </section>
+
+  <!-- 2. TELA DE LOGIN / CADASTRO -->
+  <section id="loginView" class="login-wrap hidden">
+    <form id="loginForm" class="login-card">
+      <button type="button" class="link-back" id="backToHomeBtn">← Voltar para o início</button>
+      <div class="brand-mark">🐾</div>
+      <p class="eyebrow">GESTÃO VETERINÁRIA</p>
+      <h1 id="authTitle">Bem-vindo ao PetSOS</h1>
+      <p class="muted" id="authSubtitle">Entre com sua conta ou crie um novo cadastro.</p>
+
+      <div class="auth-tabs" role="tablist">
+        <button type="button" class="auth-tab active" id="tabLogin" data-mode="login">Entrar</button>
+        <button type="button" class="auth-tab" id="tabRegister" data-mode="register">Criar conta</button>
+      </div>
+
+      <div id="registerFields" class="hidden">
+        <label>Nome completo
+          <input id="registerName" type="text" autocomplete="name" placeholder="Seu nome completo">
+        </label>
+      </div>
+
+      <label>E-mail
+        <input id="loginEmail" type="email" required autocomplete="username" placeholder="seu@email.com">
+      </label>
+      <label>Senha
+        <input id="loginPassword" type="password" required autocomplete="current-password" placeholder="Sua senha (mín. 8 caracteres)">
+      </label>
+
+      <button class="btn primary full" type="submit" id="authSubmitBtn">Entrar</button>
+      <p id="loginError" class="error" role="alert"></p>
+      <small class="muted" id="authHint">O primeiro administrador deve ser criado pelo comando indicado no README.</small>
+    </form>
+  </section>
+
+  <!-- 3. PAINEL DA CLÍNICA -->
+  <div id="appView" class="app hidden">
+    <aside class="sidebar">
+      <a class="brand" href="#homeView" data-home><span class="brand-mark small">🐾</span><span>PetSOS</span></a>
+      <p class="side-label">MENU PRINCIPAL</p>
+      <button class="nav-btn active" type="button" data-page="dashboard">▦ <span>Dashboard</span></button>
+      <button class="nav-btn" type="button" data-page="consultas">▣ <span>Consultas</span></button>
+      <button class="nav-btn" type="button" data-page="clientes">♙ <span>Clientes</span></button>
+      <button class="nav-btn" type="button" data-page="animais">🐾 <span>Animais</span></button>
+      <button class="nav-btn" type="button" data-page="veterinarios">🩺 <span>Veterinários</span></button>
+
+      <p class="side-label">ÁREA PÚBLICA</p>
+      <button class="nav-btn" type="button" id="goHomeBtn">🏠 <span>Página inicial</span></button>
+      <a class="nav-btn" href="cliente.html">👤 <span>Área do cliente</span></a>
+      <a class="nav-btn" href="perdidos.html">🔍 <span>Animais perdidos</span></a>
+
+      <div class="side-bottom">
+        <div id="userSummary" class="user-summary"></div>
+        <button id="logoutBtn" type="button" class="nav-btn">↪ <span>Sair</span></button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><span class="eyebrow">CLÍNICA VETERINÁRIA</span><h1 id="pageTitle">Dashboard</h1></div>
+        <span class="user-pill" id="userPill"></span>
+      </header>
+
+      <section id="page-dashboard" class="page">
+        <div class="welcome"><div><h2>Olá, <span id="welcomeName">equipe</span>! 👋</h2><p>Acompanhe o movimento da clínica.</p></div><span class="welcome-paw">🐾</span></div>
+        <div class="stats">
+          <article class="stat"><span>Consultas hoje</span><strong id="statConsultas">—</strong><small>Agendamentos do dia</small></article>
+          <article class="stat"><span>Clientes</span><strong id="statClientes">—</strong><small>Tutores cadastrados</small></article>
+          <article class="stat"><span>Animais</span><strong id="statAnimais">—</strong><small>Pets cadastrados</small></article>
+          <article class="stat"><span>Aguardando</span><strong id="statAguardando">—</strong><small>Agendadas ou confirmadas hoje</small></article>
+        </div>
+        <div class="panel"><div class="panel-head"><div><h2>Próximas consultas</h2><p class="muted">Agenda registrada no sistema</p></div><button class="btn primary" type="button" data-go="consultas">Ver consultas</button></div><div id="dashboardAppointments" class="table-wrap"></div></div>
+      </section>
+
+      <section id="page-clientes" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h2>Clientes</h2><p class="muted">Cadastro dos tutores dos animais.</p></div><button class="btn primary" type="button" id="newClientBtn">+ Novo cliente</button></div>
+          <div id="clientsTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="page-animais" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h2>Animais</h2><p class="muted">Cada animal fica vinculado a um cliente.</p></div><button class="btn primary" type="button" id="newAnimalBtn">+ Novo animal</button></div>
+          <div id="animalsTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="page-consultas" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h2>Agenda de consultas</h2><p class="muted">Agende e acompanhe os atendimentos.</p></div><button class="btn primary" type="button" id="newAppointmentBtn">+ Agendar consulta</button></div>
+          <div id="appointmentsTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <section id="page-veterinarios" class="page hidden">
+        <div class="panel">
+          <div class="panel-head"><div><h2>Veterinários</h2><p class="muted">Cadastro da equipe veterinária e acesso ao sistema.</p></div><button class="btn primary" type="button" id="newVetBtn">+ Novo veterinário</button></div>
+          <div id="vetsTable" class="table-wrap"></div>
+        </div>
+      </section>
+
+      <div id="toast" class="toast" role="status"></div>
+    </main>
+  </div>
+
+  <dialog id="clientDialog" class="dialog">
+    <form id="clientForm" class="dialog-form">
+      <div class="dialog-head"><div><span class="eyebrow">TUTORES</span><h2>Novo cliente</h2></div><button type="button" class="icon-btn" data-close="clientDialog">×</button></div>
+      <label>Nome completo *<input name="nome" required maxlength="120"></label>
+      <label>CPF<input name="cpf" maxlength="14" placeholder="000.000.000-00"></label>
+      <label>Telefone *<input name="telefone" required maxlength="25"></label>
+      <label>E-mail<input name="email" type="email"></label>
+      <label>Endereço<input name="endereco" maxlength="255"></label>
+      <div class="dialog-actions"><button type="button" class="btn light" data-close="clientDialog">Cancelar</button><button class="btn primary">Salvar cliente</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="animalDialog" class="dialog">
+    <form id="animalForm" class="dialog-form">
+      <div class="dialog-head"><div><span class="eyebrow">PETS</span><h2>Novo animal</h2></div><button type="button" class="icon-btn" data-close="animalDialog">×</button></div>
+      <label>Tutor *<select name="cliente_id" id="animalOwner" required></select></label>
+      <label>Nome do animal *<input name="nome" required maxlength="100"></label>
+      <label>Espécie *<select name="especie" required><option value="">Selecione</option><option>Cachorro</option><option>Gato</option><option>Ave</option><option>Réptil</option><option>Outro</option></select></label>
+      <label>Raça<input name="raca" maxlength="80"></label>
+      <label>Sexo<select name="sexo"><option>Não informado</option><option value="M">Macho</option><option value="F">Fêmea</option></select></label>
+      <label>Data de nascimento<input name="data_nascimento" type="date"></label>
+      <label>Observações<textarea name="observacoes" rows="2"></textarea></label>
+      <div class="dialog-actions"><button type="button" class="btn light" data-close="animalDialog">Cancelar</button><button class="btn primary">Salvar animal</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="appointmentDialog" class="dialog">
+    <form id="appointmentForm" class="dialog-form">
+      <div class="dialog-head"><div><span class="eyebrow">AGENDA</span><h2>Agendar consulta</h2></div><button type="button" class="icon-btn" data-close="appointmentDialog">×</button></div>
+      <label>Animal *<select name="animal_id" id="appointmentAnimal" required></select></label>
+      <label>Veterinário *<select name="veterinario_id" id="appointmentVet" required></select></label>
+      <label>Data e horário *<input name="data_hora" type="datetime-local" required></label>
+      <label>Motivo da consulta *<input name="motivo" required maxlength="255"></label>
+      <div class="dialog-actions"><button type="button" class="btn light" data-close="appointmentDialog">Cancelar</button><button class="btn primary">Confirmar agendamento</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="vetDialog" class="dialog">
+    <form id="vetForm" class="dialog-form">
+      <div class="dialog-head"><div><span class="eyebrow">EQUIPE</span><h2>Novo veterinário</h2></div><button type="button" class="icon-btn" data-close="vetDialog">×</button></div>
+      <label>Nome completo *<input name="nome" required maxlength="120" placeholder="Dr(a). Nome Sobrenome"></label>
+      <label>E-mail de acesso *<input name="email" type="email" required placeholder="vet@clinica.com"></label>
+      <label>Senha (mín. 8 caracteres) *<input name="senha" type="password" required minlength="8"></label>
+      <label>CRMV<input name="crmv" maxlength="30" placeholder="Ex.: CRMV-PE 1234"></label>
+      <label>Especialidade<input name="especialidade" maxlength="100" placeholder="Ex.: Clínica Geral, Cirurgia..."></label>
+      <div class="dialog-actions"><button type="button" class="btn light" data-close="vetDialog">Cancelar</button><button class="btn primary">Salvar veterinário</button></div>
+    </form>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
